@@ -47,3 +47,7 @@ To use this plugin, add the following dependency in your `pom.xml`.
 * Twitter: http://twitter.com/spreadthesource
 
 
+## License
+
+This project is distributed under Apache 2 License. See LICENSE.txt for more information.
+
