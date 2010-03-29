@@ -30,11 +30,13 @@ import org.apache.tapestry5.services.ComponentEventResultProcessor;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 
+import com.sun.syndication.feed.WireFeed;
 import com.sun.syndication.feed.atom.Feed;
+import com.sun.syndication.feed.rss.Channel;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.WireFeedOutput;
 
-public class FeedResultProcessor implements ComponentEventResultProcessor<Feed>
+public class FeedResultProcessor<T extends WireFeed> implements ComponentEventResultProcessor<T>
 {
 
     private final Request request;
@@ -51,15 +53,31 @@ public class FeedResultProcessor implements ComponentEventResultProcessor<Feed>
         this.outputEncoding = outputEncoding;
     }
 
-    public void processResultValue(Feed value) throws IOException
+    public void processResultValue(T value) throws IOException
     {
 
         if (value == null) { return; }
 
         request.setAttribute(InternalConstants.SUPPRESS_COMPRESSION, true);
 
-        ContentType contentType = new ContentType("application/atom+xml",
-                value.getEncoding() == null ? outputEncoding : value.getEncoding());
+        ContentType contentType = null;
+
+        if (value instanceof Feed)
+        {
+            contentType = new ContentType("application/atom+xml",
+                    value.getEncoding() == null ? outputEncoding : value.getEncoding());
+        }
+
+        else if (value instanceof Channel)
+        {
+            contentType = new ContentType("application/rss+xml",
+                    value.getEncoding() == null ? outputEncoding : value.getEncoding());
+        }
+        else
+        {
+            contentType = new ContentType("text/xml", value.getEncoding() == null ? outputEncoding
+                    : value.getEncoding());
+        }
 
         WireFeedOutput wireFeedOutput = new WireFeedOutput();
 
