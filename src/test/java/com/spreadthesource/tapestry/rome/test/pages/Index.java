@@ -16,6 +16,64 @@
 
 package com.spreadthesource.tapestry.rome.test.pages;
 
-public class Index {
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.tapestry5.annotations.OnEvent;
+
+import com.sun.syndication.feed.atom.Entry;
+import com.sun.syndication.feed.atom.Feed;
+import com.sun.syndication.feed.atom.Person;
+import com.sun.syndication.feed.rss.Channel;
+import com.sun.syndication.feed.rss.Item;
+
+public class Index
+{
+
+    @OnEvent(value = "atom")
+    Feed atom()
+    {
+        Feed feed = new Feed("atom_1.0");
+
+        feed.setTitle("my Atom feed");
+
+        List<Person> authors = new ArrayList<Person>();
+
+        List<Entry> entries = new ArrayList<Entry>();
+
+        Entry e = new Entry();
+
+        Person person = new Person();
+        person.setEmail("http://twitter.com/robinkomiwes");
+        person.setName("Robin K");
+
+        e.setTitle("My first title");
+        e.setAuthors(authors);
+        entries.add(e);
+        feed.setEntries(entries);
+
+        return feed;
+    }
+
+    @OnEvent(value = "rss")
+    Channel rss()
+    {
+        Channel feed = new Channel("rss_2.0");
+
+        feed.setTitle("my RSS feed");
+        feed.setDescription("Simple test case...");
+        feed.setLink("http://spreadthesource.com");
+
+        Item i = new Item();
+        i.setTitle("My first title");
+        i.setAuthor("Robin K");
+        i.setUri("http://spreadthesource.com");
+
+        List<Item> items = new ArrayList<Item>();
+        items.add(i);
+
+        feed.setItems(items);
+
+        return feed;
+    }
 }

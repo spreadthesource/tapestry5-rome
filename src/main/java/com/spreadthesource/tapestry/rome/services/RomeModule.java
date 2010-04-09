@@ -20,13 +20,12 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.services.ComponentEventResultProcessor;
 
 import com.sun.syndication.feed.atom.Feed;
+import com.sun.syndication.feed.rss.Channel;
 
 public class RomeModule
 {
     /**
      * Allow to return Rome feeds
-     * 
-     * TODO : Add support for RSS
      *  
      * @param configuration
      */
@@ -34,5 +33,6 @@ public class RomeModule
             MappedConfiguration<Class, ComponentEventResultProcessor> configuration)
     {
         configuration.addInstance(Feed.class, FeedResultProcessor.class); // Atom
+        configuration.addInstance(Channel.class, FeedResultProcessor.class); // RSS
     }
 }

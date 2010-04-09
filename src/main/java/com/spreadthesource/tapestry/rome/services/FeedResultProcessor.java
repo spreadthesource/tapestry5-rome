@@ -89,17 +89,11 @@ public class FeedResultProcessor<T extends WireFeed> implements ComponentEventRe
         }
         catch (IllegalArgumentException e)
         {
-            response.sendError(
-                    HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    "Error during feed generation");
-            return;
+            throw new IllegalArgumentException("Error during feed generation",e);
         }
         catch (FeedException e)
         {
-            response.sendError(
-                    HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    "Error during feed generation");
-            return;
+            throw new RuntimeException("Error during feed generation",e);
         }
 
         pw.flush();
