@@ -1,9 +1,10 @@
-<html title="tapestry-jquery Index"
+<html title="tapestry5-rome Index"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
 	xmlns:p="tapestry:parameter">
 <!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
 
-<p>Hello!</p>
-
+<p>Hello!
+<t:eventlink id="atom" t:event="atom">Atom</t:eventlink><br /> <t:eventlink id="rss" t:event="rss">RSS</t:eventlink>   
+</p>
 
 </html>
